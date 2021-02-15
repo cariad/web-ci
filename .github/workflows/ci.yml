@@ -14,7 +14,17 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
-      - run: ./test.sh
+
+      - id: cache-venv
+        uses: actions/cache@v1
+        with:
+          key: ${{ runner.os }}-venv-${{ hashFiles('Pipfile.lock') }}
+          path: ~/.local/share/virtualenvs
+
+      - if: steps.cache-venv.outputs.cache-hit != 'true'
+        run: pipenv sync --dev
+
+      - run: pipenv run ./test.sh
 
   publish:
     needs:
