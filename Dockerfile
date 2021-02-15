@@ -31,7 +31,6 @@ RUN apt-get update                                            && \
     mv /tmp/s3headersetter /usr/local/bin/                    && \
     rm -rf /tmp/*
 
-
 ENV AWS_VERSION 2.1.26
 ADD https://awscli.amazonaws.com/awscli-exe-linux-x86_64-${AWS_VERSION}.zip     /tmp/aws.zip
 ADD https://awscli.amazonaws.com/awscli-exe-linux-x86_64-${AWS_VERSION}.zip.sig /tmp/aws.zip.sig
@@ -40,3 +39,8 @@ RUN gpg --verify /tmp/aws.zip.sig /tmp/aws.zip && \
     /tmp/aws/install                           && \
     rm -rf /tmp/*                              && \
     aws --version
+
+RUN apt-get update                                  && \
+    apt-get --no-install-recommends --yes install      \
+      jq=1.6-*                                      && \
+    rm -rf /var/lib/apt/lists/*
