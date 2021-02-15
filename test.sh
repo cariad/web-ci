@@ -22,7 +22,7 @@ fi
 echo -e "${li:?}Validating YAML…"
 yamllint . --strict
 
-echo -e "${LI:?}Linting Dockerfile…"
+echo -e "${li:?}Linting Dockerfile…"
 hadolint Dockerfile
 
 echo -e "${ok:?}OK!"
